@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HumanCard from '../HumanCard/HumanCard';
 import VehicleCard from '../VehicleCard/VehicleCard';
+import PlanetCard from '../PlanetCard/PlanetCard';
 
 const CardContainer = (props) => {
 
@@ -24,17 +25,16 @@ const CardContainer = (props) => {
         return <VehicleCard {...vehicle} />
       });
       break;
-    case 3:
-      day = "Wednesday";
+    case 'Planets':
+      displayCards = props.planets.map(planet => {
+        return <PlanetCard {...planet} />
+      });
       break;
-    case 4:
-      day = "Thursday";
-      break;
-    case 5:
-      day = "Friday";
-      break;
-    case 6:
-      day = "Saturday";
+    case 'Favorites':
+      displayCards =
+        <div>
+          <p>this is the favorites</p>
+        </div>
   }
 
   return (
