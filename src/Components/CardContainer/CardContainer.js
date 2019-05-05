@@ -1,16 +1,44 @@
 import React, { Component } from 'react';
-import Card from '../Card/Card'
+import HumanCard from '../HumanCard/HumanCard'
 
 const CardContainer = (props) => {
 
-  let displayCards = props.dataSet.map(datum => {
-    return <Card {...datum} />
-  })
+  let displayCards
+  let day
+  
+  switch (props.currentDisplay) {
+    case 'intro':
+      displayCards = 
+      <div>
+        <p>this is the intro</p>
+      </div>
+      break;
+    case 'People':
+      console.log('What?')
+      displayCards = props.dataSet.map(datum => {
+        return <HumanCard {...datum} />
+      });  
+      break;
+    case 2:
+      day = "Tuesday";
+      break;
+    case 3:
+      day = "Wednesday";
+      break;
+    case 4:
+      day = "Thursday";
+      break;
+    case 5:
+      day = "Friday";
+      break;
+    case 6:
+      day = "Saturday";
+  }
 
   return (
-    <div>
+    <section className="card-container">
       { displayCards }
-    </div>
+    </section>
   )
 }
 
