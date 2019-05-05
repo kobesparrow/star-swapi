@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import HumanCard from '../HumanCard/HumanCard'
+import HumanCard from '../HumanCard/HumanCard';
+import VehicleCard from '../VehicleCard/VehicleCard';
 
 const CardContainer = (props) => {
 
@@ -14,13 +15,14 @@ const CardContainer = (props) => {
       </div>
       break;
     case 'People':
-      console.log('What?')
-      displayCards = props.dataSet.map(datum => {
-        return <HumanCard {...datum} />
+      displayCards = props.people.map(person => {
+        return <HumanCard {...person} />
       });  
       break;
-    case 2:
-      day = "Tuesday";
+    case 'Vehicles':
+      displayCards = props.vehicles.map(vehicle => {
+        return <VehicleCard {...vehicle} />
+      });
       break;
     case 3:
       day = "Wednesday";

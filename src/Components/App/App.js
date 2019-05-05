@@ -35,16 +35,17 @@ class App extends Component {
       .then(response => response.json())
       .then(result => this.movieSelect(result))
       .then(() => this.fetchPeople())
+      .then(() => this.fetchVehicles())
+      .then(() => this.fetchPlanets())
       .catch(error => console.log(error.message))
   }
 
   fetchPeople = () => {
     const url = 'https://swapi.co/api/people/'
-    return fetch (url) 
+    fetch (url) 
       .then(response => response.json())
       .then(people => this.setState({ people: people.results}))
       .then(() => this.fillOutHomeworld(this.state.people))
-      .then(() => this.fetchVehicles())
       .catch(error => console.log(error.message))
     // return Promise.all(peopleFetch)
   }
@@ -85,15 +86,17 @@ class App extends Component {
   }
 
   fetchVehicles = () => {
+    console.log('fetched Vehicles')
     const url = 'https://swapi.co/api/vehicles/'
       fetch(url)
       .then(response => response.json())
       .then(vehicles => this.setState({ vehicles: vehicles.results }))
-      .then(() => this.fetchPlanets())
+      .then()
       .catch(error => console.log(error.message))
   }
 
   fetchPlanets = () => {
+    console.log('fetch planets')
     const url = 'https://swapi.co/api/planets/'
     fetch(url)
       .then(response => response.json())
@@ -106,7 +109,11 @@ class App extends Component {
     <div className="App">
       <h1>STAR SWAPI</h1>
       <DisplaySelector updateCardContainer={ this.updateCardContainer }/>
-      <CardContainer dataSet={ this.state.people } currentDisplay={ this.state.currentDisplay }/>
+      <CardContainer 
+        currentDisplay={ this.state.currentDisplay }
+        people={ this.state.people } 
+        vehicles={ this.state.vehicles }
+      />
       {this.state.isLoading ?
         <Loader /> :
         <ScrollingText scrollingMovieInfo={ this.state.scrollingMovieInfo } />}
