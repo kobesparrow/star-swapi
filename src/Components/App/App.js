@@ -19,6 +19,10 @@ class App extends Component {
       currentDisplay: 'intro'
     }
   }
+
+  updateCardContainer = (event) => {
+    this.setState({ currentDisplay: event.target.value })
+  }
   
   movieSelect = (fetchedMovies) => {
     let singleMovie = fetchedMovies.results.sort(() => 0.5 - Math.random()).pop();
@@ -27,42 +31,74 @@ class App extends Component {
 
   componentDidMount = () => {
     const url = 'https://swapi.co/api/films'
-    fetch (url)
-      .then (response => response.json())
-      .then (result => this.movieSelect(result))
-      .then (() => this.fetchPeople())
-      .catch (error => console.log(error.message))
+    fetch(url)
+      .then(response => response.json())
+      .then(result => this.movieSelect(result))
+      .then(() => this.fetchPeople())
+      .catch(error => console.log(error.message))
   }
 
   fetchPeople = () => {
     const url = 'https://swapi.co/api/people/'
-    fetch (url) 
-      .then (response => response.json())
-      .then (people => this.setState({ people: people.results }))
-      .then (() => this.fetchVehicles())
-      .catch (error => console.log(error.message))
+    return fetch (url) 
+      .then(response => response.json())
+      .then(people => this.setState({ people: people.results}))
+      .then(() => this.fillOutHomeworld(this.state.people))
+      .then(() => this.fetchVehicles())
+      .catch(error => console.log(error.message))
+    // return Promise.all(peopleFetch)
+  }
+
+  fillOutHomeworld = (people) => {
+    let updatedPeople = [];
+    let peoplePlusHomeworld = people.map(person => {
+      fetch(person.homeworld)
+      .then(response => response.json())
+      .then(homeworld => this.addHomeworld(homeworld.name, homeworld.population, person))
+      .then(homeworldPerson => updatedPeople.push(homeworldPerson))
+      .catch(error => console.log(error.message))
+    });
+    this.fillOutSpecies(this.state.people)
+    this.setTimeout(function () { this.setState({ people: updatedPeople }) }, 0)
+  }
+  
+  addHomeworld = (name, population, person) => {
+    const homeworldInfo = { homeworldName: name, homeworldPopulation: population }
+    return Object.assign(person, homeworldInfo)
+  }
+
+  fillOutSpecies = (people) => {
+    let updatedPeople = [];
+    let peoplePlusSpecies = people.map(person => {
+      fetch(person.species[0])
+        .then(response => response.json())
+        .then(species => this.addSpecies(species.name, species.language, person))
+        .then(speciesPerson => updatedPeople.push(speciesPerson))
+        .catch(error => console.log(error.message))
+    })
+    this.setTimeout(function () { this.setState({ people: updatedPeople }) }, 0)
+  }
+
+  addSpecies = (name, language, person) => {
+    const speciesInfo = { speciesName: name, language: language }
+    return Object.assign(person, speciesInfo)
   }
 
   fetchVehicles = () => {
     const url = 'https://swapi.co/api/vehicles/'
-      fetch (url)
-      .then (response => response.json())
-      .then (vehicles => this.setState({ vehicles: vehicles.results }))
-      .then (() => this.fetchPlanets())
-      .catch (error => console.log(error.message))
+      fetch(url)
+      .then(response => response.json())
+      .then(vehicles => this.setState({ vehicles: vehicles.results }))
+      .then(() => this.fetchPlanets())
+      .catch(error => console.log(error.message))
   }
 
   fetchPlanets = () => {
     const url = 'https://swapi.co/api/planets/'
     fetch(url)
-      .then (response => response.json())
-      .then (planets => this.setState({ planets: planets.results }))
+      .then(response => response.json())
+      .then(planets => this.setState({ planets: planets.results }))
       .catch(error => console.log(error.message))
-  }
-
-  updateCardContainer = (event) => {
-    this.setState({ currentDisplay: event.target.value })
-    console.log(event.target.value)
   }
 
   render() {
@@ -70,7 +106,7 @@ class App extends Component {
     <div className="App">
       <h1>STAR SWAPI</h1>
       <DisplaySelector updateCardContainer={ this.updateCardContainer }/>
-      <CardContainer dataSet={ this.state.people } />
+      <CardContainer dataSet={ this.state.people } currentDisplay={ this.state.currentDisplay }/>
       {this.state.isLoading ?
         <Loader /> :
         <ScrollingText scrollingMovieInfo={ this.state.scrollingMovieInfo } />}
