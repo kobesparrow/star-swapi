@@ -86,7 +86,6 @@ class App extends Component {
   }
 
   fetchVehicles = () => {
-    console.log('fetched Vehicles')
     const url = 'https://swapi.co/api/vehicles/'
       fetch(url)
       .then(response => response.json())
@@ -96,12 +95,48 @@ class App extends Component {
   }
 
   fetchPlanets = () => {
-    console.log('fetch planets')
     const url = 'https://swapi.co/api/planets/'
     fetch(url)
       .then(response => response.json())
       .then(planets => this.setState({ planets: planets.results }))
+      .then(() => this.fillOutPlanetResidentData(this.state.planets))
       .catch(error => console.log(error.message))
+  }
+
+  fillOutPlanetResidentData = (planets) => {
+    let updatedPlanets = [];
+    let planetsPlusResidents = planets.map(planet => {
+      // if (planet.residents === null) {
+      //   this.zeroResidentCombination(planet)
+      // } else {
+        updatedPlanets.push(this.addResidentsToPlanet(planet))
+      // }
+    })
+    this.setTimeout(function () { this.setState({ planets: updatedPlanets }) }, 0)
+  }
+
+  zeroResidentCombination = (planet) => {
+    console.log('zero res test')
+    const noResident = { residents: 'None'}
+    return Object.assign(planet, noResident)
+  }
+
+  addResidentsToPlanet = (planet) => {
+    let residents = []
+    planet.residents.map(resident => {
+      fetch(resident)
+        .then(response => response.json())
+        .then(resident => residents.push(resident.name))
+        .catch(error => console.log(error.message))
+    })
+    return this.createPlanetResidentObject(planet, residents)
+    // console.log(residents)
+    // return Object.assign(planet, residents)
+  }
+
+  createPlanetResidentObject = (planet, residents) => {
+    let residentObject = { residents: residents};
+    return Object.assign(planet, residentObject);
   }
 
   render() {
@@ -113,6 +148,7 @@ class App extends Component {
         currentDisplay={ this.state.currentDisplay }
         people={ this.state.people } 
         vehicles={ this.state.vehicles }
+        planets={ this.state.planets }
       />
       {this.state.isLoading ?
         <Loader /> :
