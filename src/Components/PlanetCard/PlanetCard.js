@@ -4,6 +4,10 @@ const PlanetCard = ({ name, terrain, population, climate, residents }) => {
 
   let residentNames = residents.toString()
 
+  // const handleAction = () => {
+
+  // }
+
   return (
     <article className="card">
       <h4>{name}</h4>

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import './App.css';
 import DisplaySelector from '../DisplaySelector/DisplaySelector';
-import ScrollingText from '../ScrollingText/ScrollingText';
-import Loader from '../Loader/Loader';
 import CardContainer from '../CardContainer/CardContainer';
 
 class App extends Component {
@@ -20,6 +17,17 @@ class App extends Component {
     }
   }
 
+  componentDidMount = () => {
+    const url = 'https://swapi.co/api/films'
+    fetch(url)
+    .then(response => response.json())
+      .then(result => this.movieSelect(result))
+      .then(() => this.fetchPeople())
+      .then(() => this.fetchVehicles())
+      .then(() => this.fetchPlanets())
+      .catch(error => console.log(error.message))
+    }
+
   updateCardContainer = (event) => {
     this.setState({ currentDisplay: event.target.value })
   }
@@ -29,17 +37,6 @@ class App extends Component {
     this.setState({ scrollingMovieInfo: singleMovie, isLoading: false })
   }
 
-  componentDidMount = () => {
-    const url = 'https://swapi.co/api/films'
-    fetch(url)
-      .then(response => response.json())
-      .then(result => this.movieSelect(result))
-      .then(() => this.fetchPeople())
-      .then(() => this.fetchVehicles())
-      .then(() => this.fetchPlanets())
-      .catch(error => console.log(error.message))
-  }
-
   fetchPeople = () => {
     const url = 'https://swapi.co/api/people/'
     fetch (url) 
@@ -47,13 +44,12 @@ class App extends Component {
       .then(people => this.setState({ people: people.results}))
       .then(() => this.fillOutHomeworld(this.state.people))
       .catch(error => console.log(error.message))
-    // return Promise.all(peopleFetch)
   }
 
   fillOutHomeworld = (people) => {
     let updatedPeople = [];
-    let peoplePlusHomeworld = people.map(person => {
-      fetch(person.homeworld)
+    people.map(person => {
+      return fetch(person.homeworld)
       .then(response => response.json())
       .then(homeworld => this.addHomeworld(homeworld.name, homeworld.population, person))
       .then(homeworldPerson => updatedPeople.push(homeworldPerson))
@@ -70,8 +66,8 @@ class App extends Component {
 
   fillOutSpecies = (people) => {
     let updatedPeople = [];
-    let peoplePlusSpecies = people.map(person => {
-      fetch(person.species[0])
+    people.map(person => {
+      return fetch(person.species[0])
         .then(response => response.json())
         .then(species => this.addSpecies(species.name, species.language, person))
         .then(speciesPerson => updatedPeople.push(speciesPerson))
@@ -105,33 +101,21 @@ class App extends Component {
 
   fillOutPlanetResidentData = (planets) => {
     let updatedPlanets = [];
-    let planetsPlusResidents = planets.map(planet => {
-      // if (planet.residents === null) {
-      //   this.zeroResidentCombination(planet)
-      // } else {
-        updatedPlanets.push(this.addResidentsToPlanet(planet))
-      // }
+    planets.map(planet => {
+        return updatedPlanets.push(this.addResidentsToPlanet(planet));
     })
-    this.setTimeout(function () { this.setState({ planets: updatedPlanets }) }, 0)
-  }
-
-  zeroResidentCombination = (planet) => {
-    console.log('zero res test')
-    const noResident = { residents: 'None'}
-    return Object.assign(planet, noResident)
+    this.setTimeout(function () { this.setState({ planets: updatedPlanets }) }, 0);
   }
 
   addResidentsToPlanet = (planet) => {
     let residents = []
     planet.residents.map(resident => {
-      fetch(resident)
+      return fetch(resident)
         .then(response => response.json())
         .then(resident => residents.push(resident.name))
         .catch(error => console.log(error.message))
     })
     return this.createPlanetResidentObject(planet, residents)
-    // console.log(residents)
-    // return Object.assign(planet, residents)
   }
 
   createPlanetResidentObject = (planet, residents) => {
@@ -139,22 +123,27 @@ class App extends Component {
     return Object.assign(planet, residentObject);
   }
 
+  storeFavorite = (e) => {
+    e.preventDefault();
+    console.log('test')
+  }
+
   render() {
-  return (
-    <div className="App">
-      <h1>STAR SWAPI</h1>
-      <DisplaySelector updateCardContainer={ this.updateCardContainer }/>
-      <CardContainer 
-        currentDisplay={ this.state.currentDisplay }
-        people={ this.state.people } 
-        vehicles={ this.state.vehicles }
-        planets={ this.state.planets }
-      />
-      {this.state.isLoading ?
-        <Loader /> :
-        <ScrollingText scrollingMovieInfo={ this.state.scrollingMovieInfo } />}
-    </div>
-  );
+    return (
+      <div className="App">
+        <h1>STAR SWAPI</h1>
+        <DisplaySelector updateCardContainer={ this.updateCardContainer }/>
+        <CardContainer 
+          currentDisplay={ this.state.currentDisplay }
+          people={ this.state.people } 
+          vehicles={ this.state.vehicles }
+          planets={ this.state.planets }
+          isLoading={ this.state.isLoading }
+          scrollingMovieInfo={ this.state.scrollingMovieInfo }
+          storeFavorite= { this.storeFavorite }
+        />
+      </div>
+    );
   }
 }
 

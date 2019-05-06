@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## STAR SWAPI
 
-## Available Scripts
+SWapi-box is the first project assigned in mod three at Turing School in Denver, CO. My iteration of the solo project has been dubbed STAR SWAPI. The project is intended to solidify the understanding and use of fetch calls and nested fetch calls using the Star Wars api at https://swapi.co/.
 
-In the project directory, you can run:
+### Intall/Setup
 
-### `npm start`
+- `clone the repo`
+- `run npm install`
+- `run npm start`
+- direct your browswer to localhost:3000
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Instructions: enjoy the scrolling text of a randomly selected Star Wars movie or select one of the buttons from the top of the screen to view additional information displayed on cards below the buttons.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Stack
+- Jest/Enzyme
+- React
+- SCSS
 
-### `npm test`
+## Screenshots
+Wireframing landing page with scrolling text
+[![Screen-Shot-2019-05-06-at-8-15-54-AM.png](https://i.postimg.cc/5NsM3kGk/Screen-Shot-2019-05-06-at-8-15-54-AM.png)](https://postimg.cc/crtj1TdQ)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Wireframing the people page
+[![Screen-Shot-2019-05-06-at-8-16-12-AM.png](https://i.postimg.cc/sg8CFG3Y/Screen-Shot-2019-05-06-at-8-16-12-AM.png)](https://postimg.cc/5XwRL0Yy)
 
-### `npm run build`
+Screenshot of executed landing page
+[![Screen-Shot-2019-05-06-at-8-16-40-AM.png](https://i.postimg.cc/wvXCsWL2/Screen-Shot-2019-05-06-at-8-16-40-AM.png)](https://postimg.cc/ftb2GfHS)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Screenshot of executed people page
+[![Screen-Shot-2019-05-06-at-8-17-09-AM.png](https://i.postimg.cc/C5wWCj4g/Screen-Shot-2019-05-06-at-8-17-09-AM.png)](https://postimg.cc/1nYCsVTC)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+##Learning goals
+This project left a bittersweet taste in my mouth. I accomplished the main learning goal of better understanding fetch calls, the promises they return and how to work with loading screens and potential delays when working with multiple api calls. As an ancillary benefit, this project helped me better understand React — specifically writing and using functional components as well as using destructuring to make prop drilling more readable and my first ever switch statement. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+All that to say, my personal goal was to walk away with a solid grasp of testing and that did not happen. I do have a better understanding of the syntax and the tools available to test, but implementing those tools still leads to a great deal of errors and frustration. I have spent a great deal of time on testing without progress and need to consider other avenues to increase my understanding. This project was a step forward, but not the finish I was hoping for.

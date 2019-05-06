@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-const HumanCard = ({ name, homeworldName, speciesName, language, homeworldPopulation}) => {
-
+const HumanCard = ({ name, homeworldName, speciesName, language, homeworldPopulation, storeFavorite}) => {
+  
   return (
     <article className="card">
       <h4>{name}</h4>
