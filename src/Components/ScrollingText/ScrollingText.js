@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Crawl from 'react-star-wars-crawl';
 import 'react-star-wars-crawl/lib/index.css';
 import './ScrollingText.css'

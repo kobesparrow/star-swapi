@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import HumanCard from '../HumanCard/HumanCard';
 import VehicleCard from '../VehicleCard/VehicleCard';
 import PlanetCard from '../PlanetCard/PlanetCard';
+import Loader from '../Loader/Loader';
+import ScrollingText from '../ScrollingText/ScrollingText';
 
 const CardContainer = (props) => {
 
   let displayCards
-  let day
   
   switch (props.currentDisplay) {
     case 'intro':
-      displayCards = 
-      <div>
-        <p>this is the intro</p>
-      </div>
+      displayCards =
+        props.isLoading ?
+            <Loader /> :
+            <ScrollingText scrollingMovieInfo={ props.scrollingMovieInfo } /> 
       break;
     case 'People':
       displayCards = props.people.map(person => {
@@ -33,8 +34,11 @@ const CardContainer = (props) => {
     case 'Favorites':
       displayCards =
         <div>
-          <p>this is the favorites</p>
+          <p>this is where your favorites should be</p>
         </div>
+      break;
+    default: 
+      displayCards = <Loader />
   }
 
   return (
